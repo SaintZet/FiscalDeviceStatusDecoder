@@ -1,7 +1,11 @@
 ﻿using FiscalDeviceStatusDecoder.Application;
 using FiscalDeviceStatusDecoder.Domain;
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -12,6 +16,8 @@ namespace FiscalDeviceStatusDecoder.Presentation
         private string bytes = string.Empty;
         private string hex = string.Empty;
 
+        private ObservableCollection<StatusBit> statusDevice = new();
+
         public MainViewModel()
         {
             Devices = InitializeDevices();
@@ -20,6 +26,15 @@ namespace FiscalDeviceStatusDecoder.Presentation
 
         public event PropertyChangedEventHandler? PropertyChanged;
 
+        public ObservableCollection<StatusBit> StatusDevice
+        {
+            get => statusDevice;
+            set
+            {
+                statusDevice = value;
+                OnPropertyChanged(nameof(StatusDevice));
+            }
+        }
         public ObservableCollection<DeviceModels> Devices { get; set; }
 
         public DeviceModels SelectedDevices { get; set; }
@@ -61,7 +76,22 @@ namespace FiscalDeviceStatusDecoder.Presentation
 
             var manufacturer = SelectedDevices.Manufacturer;
             var statusDocument = manufacturer.GetStatusDocument(SelectedDevices.Models, SelectedDevices.Country);
-            //InitializeStatusDevice(statusDocument);
+            StatusDevice = InitializeStatusDevice(statusDocument);
+        }
+
+        private ObservableCollection<StatusBit> InitializeStatusDevice(Dictionary<(int, int), string> statusDocument)
+        {
+            ObservableCollection<StatusBit> status = new ObservableCollection<StatusBit>();
+
+            string[] bytes = Bytes.Split(' ');
+
+            foreach (var keyValuePair in statusDocument)
+            {
+                var statusByte = bytes[keyValuePair.Key.Item1];
+                int statusBit = Convert.ToUInt16(char.GetNumericValue(statusByte, keyValuePair.Key.Item2));
+                status.Add(new StatusBit(statusBit, keyValuePair.Value));
+            }
+            return status;
         }
 
         private ObservableCollection<DeviceModels> InitializeDevices() => new ObservableCollection<DeviceModels>()

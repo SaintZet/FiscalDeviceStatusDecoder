@@ -4,21 +4,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FiscalDeviceStatusDecoder.Presentation"
+        xmlns:conv="clr-namespace:FiscalDeviceStatusDecoder.Presentation.Converters"
         mc:Ignorable="d"
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="FiscalDeviceStatusDecoder"
-        Height="500"
+        Height="800"
         Width="700">
+    <Window.Resources>
+        <conv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+    </Window.Resources>
     <Window.DataContext>
         <local:MainViewModel />
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.3*" />
-            <RowDefinition Height="0.3*" />
-            <RowDefinition Height="0.3*" />
-            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -92,6 +96,40 @@
                   Header="Status"
                   Margin="10"
                   Padding="10">
+            <ListView ItemsSource="{Binding StatusDevice}"
+                      TextElement.FontSize="12">
+                <ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <Setter Property="HorizontalContentAlignment"
+                                Value="Left" />
+                    </Style>
+                </ListView.ItemContainerStyle>
+                <ListView.View>
+                    <GridView>
+                        <GridView.ColumnHeaderContainerStyle>
+                            <Style BasedOn="{StaticResource {x:Type GridViewColumnHeader}}"
+                                   TargetType="{x:Type GridViewColumnHeader}">
+                                <Setter Property="IsHitTestVisible"
+                                        Value="False" />
+                            </Style>
+                        </GridView.ColumnHeaderContainerStyle>
+
+                        <GridViewColumn Header="Bit">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Border Width="10"
+                                            Height="10"
+                                            Margin="0"
+                                            Background="{Binding Status, Converter={StaticResource StatusToBrushConverter}}" />
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
+                                        Width="490"
+                                        Header="Name" />
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </GroupBox>
     </Grid>
 </Window>
