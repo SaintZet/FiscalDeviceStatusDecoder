@@ -12,7 +12,7 @@
         Height="800"
         Width="700">
     <Window.Resources>
-        <conv:StatusToBrushConverter x:Key="StatusToBrushConverter" />
+        <conv:BoolToBrushConverter x:Key="BoolToBrushConverter" />
     </Window.Resources>
     <Window.DataContext>
         <local:MainViewModel />
@@ -115,17 +115,22 @@
                         </GridView.ColumnHeaderContainerStyle>
 
                         <GridViewColumn Header="Bit">
+
                             <GridViewColumn.CellTemplate>
                                 <DataTemplate>
                                     <Border Width="10"
                                             Height="10"
                                             Margin="0"
-                                            Background="{Binding Status, Converter={StaticResource StatusToBrushConverter}}" />
+                                            BorderThickness="1"
+                                            BorderBrush="Black"
+                                            Padding="2"
+                                            HorizontalAlignment="Center"
+                                            Background="{Binding Status, Converter={StaticResource BoolToBrushConverter}}" />
                                 </DataTemplate>
                             </GridViewColumn.CellTemplate>
                         </GridViewColumn>
                         <GridViewColumn DisplayMemberBinding="{Binding Path=Name}"
-                                        Width="490"
+                                        Width="580"
                                         Header="Name" />
                     </GridView>
                 </ListView.View>

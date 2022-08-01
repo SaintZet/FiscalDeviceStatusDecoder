@@ -1,11 +1,10 @@
-﻿namespace FiscalDeviceStatusDecoder.Domain
+﻿namespace FiscalDeviceStatusDecoder.Domain;
+
+public enum Country
 {
-    public enum Country
-    {
-        BG,
-        KZ,
-        RO,
-        KE,
-        RU,
-    }
+    BG,
+    KZ,
+    RO,
+    KE,
+    RU,
 }

@@ -4,8 +4,9 @@ using System.Linq;
 
 namespace FiscalDeviceStatusDecoder.Domain;
 
+//TODO: Add comment
 /// <summary>
-/// Comment.
+///
 /// </summary>
 public abstract class BaseManufacturer
 {
@@ -15,7 +16,7 @@ public abstract class BaseManufacturer
 
     public virtual Dictionary<(int, int), string> GetStatusDocument(string[]? currentModels, Country country)
     {
-        if (currentModels == null)
+        if (currentModels == Array.Empty<string>())
         {
             return DefaultDocument!;
         }
