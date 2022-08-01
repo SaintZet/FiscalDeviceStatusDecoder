@@ -1,13 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FiscalDeviceStatusDecoder.Domain
+namespace FiscalDeviceStatusDecoder.Domain;
+
+internal sealed class Incotext : BaseManufacturer
 {
-    internal class Incotext
+    private static readonly Lazy<Incotext> lazy = new Lazy<Incotext>(() => new Incotext());
+
+    private Incotext()
     {
-        internal Dictionary<(int, int), string> GetDocument(string[] models)
-        {
-            throw new NotImplementedException();
-        }
     }
+
+    public static Incotext Instance => lazy.Value;
+
+    public override string Name => nameof(Incotext);
+    public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => throw new NotImplementedException();
+
+    #region Documents
+
+    public override Dictionary<(int, int), string>? DefaultDocument => new()
+            {
+                { (0,0), "All good" },
+            };
+
+    #endregion Documents
 }

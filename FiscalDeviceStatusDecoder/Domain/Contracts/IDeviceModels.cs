@@ -1,8 +1,8 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain
 {
-    public interface IDeviceModels
+    internal interface IDeviceModels
     {
-        Manufacturer Manufacturer { get; }
+        BaseManufacturer Manufacturer { get; }
         string[] Models { get; }
         int QuantityByte { get; }
         Country Country { get; }

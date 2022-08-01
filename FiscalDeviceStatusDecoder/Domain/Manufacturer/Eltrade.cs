@@ -1,16 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace FiscalDeviceStatusDecoder.Domain
+namespace FiscalDeviceStatusDecoder.Domain;
+
+internal sealed class Eltrade : BaseManufacturer
 {
-    internal class Eltrade
+    private static readonly Lazy<Eltrade> lazy = new Lazy<Eltrade>(() => new Eltrade());
+
+    private Eltrade()
     {
-        internal Dictionary<(int, int), string> GetDocument(string[]? models)
-        {
-            throw new NotImplementedException();
-        }
     }
+
+    public static Eltrade Instance => lazy.Value;
+
+    public override string Name => nameof(Eltrade);
+    public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => throw new NotImplementedException();
+
+    #region Documents
+
+    public override Dictionary<(int, int), string>? DefaultDocument => new()
+            {
+                { (0,0), "All good" },
+            };
+
+    #endregion Documents
 }

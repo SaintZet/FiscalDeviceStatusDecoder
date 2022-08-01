@@ -1,18 +1,18 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain
 {
-    public class DeviceModels : IDeviceModels
+    internal class DeviceModels : IDeviceModels
     {
-        public DeviceModels(Manufacturer manufacturer, int quantityByte, Country country, string[]? models = null)
+        public DeviceModels(BaseManufacturer manufacturer, int quantityByte, Country country, string[]? models = null)
         {
             Manufacturer = manufacturer;
             Models = models ?? System.Array.Empty<string>();
             QuantityByte = quantityByte;
             Country = country;
 
-            DisplayInformation = $"{Manufacturer} {string.Join("/", Models)} ({QuantityByte} {Country})";
+            DisplayInformation = $"{Manufacturer.Name} {string.Join("/", Models)} ({QuantityByte} {Country})";
         }
 
-        public Manufacturer Manufacturer { get; }
+        public BaseManufacturer Manufacturer { get; }
         public string[] Models { get; }
         public int QuantityByte { get; }
         public Country Country { get; }

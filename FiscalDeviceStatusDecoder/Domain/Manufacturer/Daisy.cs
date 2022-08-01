@@ -1,43 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 
-namespace FiscalDeviceStatusDecoder.Domain
+namespace FiscalDeviceStatusDecoder.Domain;
+
+internal sealed class Daisy : BaseManufacturer
 {
-    internal class Daisy
+    private static readonly Lazy<Daisy> lazy = new Lazy<Daisy>(() => new Daisy());
+
+    private Daisy()
     {
-        private Dictionary<string[], Dictionary<(int, int), string>> AllModels = new();
-
-        #region Documents
-
-        private Dictionary<(int, int), string> DefaultDocument = new()
-                {
-                    { (0,0), "All good" },
-                };
-
-        #endregion Documents
-
-        internal Daisy()
-        {
-        }
-
-        //TODO: Create abstract class.
-        internal Dictionary<(int, int), string> GetDocument(string[]? currentModels)
-        {
-            if (currentModels == null)
-            {
-                return DefaultDocument;
-            }
-
-            foreach (var keyValue in AllModels)
-            {
-                if (keyValue.Key.Intersect(currentModels).Any())
-                {
-                    return keyValue.Value;
-                }
-            }
-
-            throw new NotImplementedException();
-        }
     }
+
+    public static Daisy Instance => lazy.Value;
+
+    public override string Name => nameof(Daisy);
+    public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => throw new NotImplementedException();
+
+    #region Documents
+
+    public override Dictionary<(int, int), string>? DefaultDocument => new()
+            {
+                { (0,0), "All good" },
+            };
+
+    #endregion Documents
 }
