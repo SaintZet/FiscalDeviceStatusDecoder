@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace FiscalDeviceStatusDecoder.Domain;
 
+/// <inheritdoc/>
 internal sealed class Eltrade : BaseManufacturer
 {
     private static readonly Lazy<Eltrade> lazy = new Lazy<Eltrade>(() => new Eltrade());

@@ -4,9 +4,9 @@ using System.Linq;
 
 namespace FiscalDeviceStatusDecoder.Domain;
 
-//TODO: Add comment
 /// <summary>
-///
+/// Fiscal device manufacturer class.
+/// Contains information about significant bits in responses from FM.
 /// </summary>
 public abstract class BaseManufacturer
 {
@@ -14,7 +14,7 @@ public abstract class BaseManufacturer
     public abstract Dictionary<(int, int), string>? DefaultDocument { get; }
     public abstract string Name { get; }
 
-    public virtual Dictionary<(int, int), string> GetStatusDocument(string[]? currentModels, Country country)
+    public virtual Dictionary<(int, int), string> GetStatusDocument(string[] currentModels, Country country)
     {
         if (currentModels == Array.Empty<string>())
         {

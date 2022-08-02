@@ -19,10 +19,10 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.1*" />
-            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.12*" />
+            <RowDefinition Height="0.12*" />
+            <RowDefinition Height="0.12*" />
+            <RowDefinition Height="0.12*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -121,9 +121,9 @@
                                     <Border Width="10"
                                             Height="10"
                                             Margin="0"
-                                            BorderThickness="1"
+                                            BorderThickness="0"
                                             BorderBrush="Black"
-                                            Padding="2"
+                                            Padding="0"
                                             HorizontalAlignment="Center"
                                             Background="{Binding Status, Converter={StaticResource BoolToBrushConverter}}" />
                                 </DataTemplate>

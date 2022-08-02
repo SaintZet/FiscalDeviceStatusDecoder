@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace FiscalDeviceStatusDecoder.Domain;
 
+/// <inheritdoc />
 internal sealed class Datecs : BaseManufacturer
 {
     private static readonly Lazy<Datecs> lazy = new Lazy<Datecs>(() => new Datecs());

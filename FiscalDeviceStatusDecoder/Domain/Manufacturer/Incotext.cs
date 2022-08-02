@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace FiscalDeviceStatusDecoder.Domain;
 
+/// <inheritdoc/>
 internal sealed class Incotext : BaseManufacturer
 {
     private static readonly Lazy<Incotext> lazy = new Lazy<Incotext>(() => new Incotext());

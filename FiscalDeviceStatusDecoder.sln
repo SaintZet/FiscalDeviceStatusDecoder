@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32413.511
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FiscalDeviceStatusDecoder", "FiscalDeviceStatusDecoder\FiscalDeviceStatusDecoder.csproj", "{33C93EB2-1D0D-44F6-BDD2-1D034145AF70}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FiscalDeviceStatusDecoderTest", "FiscalDeviceStatusDecoderTest\FiscalDeviceStatusDecoderTest.csproj", "{EE183386-A684-4379-9503-474E6C8709FA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{33C93EB2-1D0D-44F6-BDD2-1D034145AF70}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{33C93EB2-1D0D-44F6-BDD2-1D034145AF70}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{33C93EB2-1D0D-44F6-BDD2-1D034145AF70}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE183386-A684-4379-9503-474E6C8709FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE183386-A684-4379-9503-474E6C8709FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE183386-A684-4379-9503-474E6C8709FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE183386-A684-4379-9503-474E6C8709FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

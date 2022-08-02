@@ -1,12 +1,9 @@
 ﻿using FiscalDeviceStatusDecoder.Application;
 using FiscalDeviceStatusDecoder.Domain;
-using FiscalDeviceStatusDecoder.Presentation.Services;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Input;
 
@@ -36,9 +33,9 @@ internal class MainViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(StatusDevice));
         }
     }
-    public ObservableCollection<DeviceModels> Devices { get; set; }
+    public ObservableCollection<IDeviceModels> Devices { get; set; }
 
-    public DeviceModels SelectedDevices { get; set; }
+    public IDeviceModels SelectedDevices { get; set; }
     public string HEX
     {
         get => hex;
@@ -73,10 +70,11 @@ internal class MainViewModel : INotifyPropertyChanged
         bytes = hexValue.ConvertToBinary();
 
         HEX = Regex.Replace(hexValue.ToString(), ".{2}", "$0 ");
-        Bytes = Regex.Replace(bytes, ".{8}", "$0 ");
+        Bytes = Regex.Replace(bytes, ".{8}", "$0 ").Trim();
 
         var manufacturer = SelectedDevices.Manufacturer;
         var statusDocument = manufacturer.GetStatusDocument(SelectedDevices.Models, SelectedDevices.Country);
+
         StatusDevice = InitializeStatusDevice(statusDocument);
     }
 
@@ -95,7 +93,7 @@ internal class MainViewModel : INotifyPropertyChanged
         return status;
     }
 
-    private ObservableCollection<DeviceModels> InitializeDevices() => new ObservableCollection<DeviceModels>()
+    private ObservableCollection<IDeviceModels> InitializeDevices() => new ObservableCollection<IDeviceModels>()
         {
             new DeviceModels(Datecs.Instance, 6 , Country.BG , new string[] { "DP-05", "DP-25", "DP-35", "WP-50", "DP-150" }),
             new DeviceModels(Datecs.Instance, 6, Country.BG, new string[] { "FP-800", "FP-2000", "FP-650", "SK1-21F", "SK1-31F", "FMP-10", "FP-700" }),
@@ -103,7 +101,7 @@ internal class MainViewModel : INotifyPropertyChanged
             new DeviceModels(Datecs.Instance, 8, Country.RO),
             new DeviceModels(Daisy.Instance, 6, Country.BG),
             new DeviceModels(Eltrade.Instance, 6, Country.BG),
-            new DeviceModels(Tremol.Instance, 2, Country.BG),
+            new DeviceModels(Tremol.Instance, 6, Country.BG),
             new DeviceModels(Tremol.Instance, 2, Country.KE, new string[] { "CU", "M23" }),
             new DeviceModels(Incotext.Instance, 6, Country.KE),
             new DeviceModels(Port.Instance, 6, Country.RU, new string[] { "150", "600", "1000" }),
