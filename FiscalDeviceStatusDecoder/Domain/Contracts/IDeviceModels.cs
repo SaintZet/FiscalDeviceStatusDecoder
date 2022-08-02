@@ -3,7 +3,7 @@
 /// <summary>
 /// Basic information about the group of fiscal machines.
 /// </summary>
-internal interface IDeviceModels
+public interface IDeviceModels
 {
     BaseManufacturer Manufacturer { get; }
     string[] Models { get; }

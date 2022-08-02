@@ -1,6 +1,6 @@
 ﻿namespace FiscalDeviceStatusDecoder.Application;
 
-internal class Hex
+public class Hex
 {
     private string Value;
 
@@ -13,6 +13,10 @@ internal class Hex
         Value = value;
     }
 
+    /// <summary>
+    /// </summary>
+    /// <param name="separator"> Every 4 characters </param>
+    /// <returns> </returns>
     public string ConvertToBinary(string separator = "") =>
         string.Join(separator, Value.Select(c => Convert.ToString(Convert.ToInt32(c.ToString(), 16), 2).PadLeft(4, '0')));
 

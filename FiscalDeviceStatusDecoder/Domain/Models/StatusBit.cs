@@ -1,8 +1,8 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain;
 
-internal class StatusBit
+public record struct StatusBit
 {
-    internal StatusBit(int status, string name)
+    public StatusBit(int status, string name)
     {
         Name = name;
         Status = status;

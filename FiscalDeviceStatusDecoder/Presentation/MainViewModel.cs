@@ -3,12 +3,12 @@ using FiscalDeviceStatusDecoder.Domain;
 
 namespace FiscalDeviceStatusDecoder.Presentation;
 
-internal class MainViewModel : INotifyPropertyChanged
+public class MainViewModel : INotifyPropertyChanged
 {
     private string bytes = string.Empty;
     private string hex = string.Empty;
 
-    private ObservableCollection<StatusBit> statusDevice = new();
+    private List<StatusBit> statusDevices = new();
 
     public MainViewModel()
     {
@@ -18,16 +18,16 @@ internal class MainViewModel : INotifyPropertyChanged
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public ObservableCollection<StatusBit> StatusDevice
+    public List<StatusBit> StatusDevices
     {
-        get => statusDevice;
+        get => statusDevices;
         set
         {
-            statusDevice = value;
-            OnPropertyChanged(nameof(StatusDevice));
+            statusDevices = value;
+            OnPropertyChanged(nameof(StatusDevices));
         }
     }
-    public ObservableCollection<IDeviceModels> Devices { get; set; }
+    public List<IDeviceModels> Devices { get; set; }
 
     public IDeviceModels SelectedDevices { get; set; }
     public string HEX
@@ -41,7 +41,7 @@ internal class MainViewModel : INotifyPropertyChanged
     }
     public string Bytes
     {
-        get => bytes;
+        get => $"Status Bytes {bytes}";
         set
         {
             bytes = value;
@@ -49,45 +49,46 @@ internal class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    public ICommand DecodeCommand => new RelayCommand(execute: Decode, canExecute: _ => HEX?.Length > 0);
+    public ICommand DecodeCommand => new RelayCommand(execute: _ => StatusDevices = InitializeStatusDevices(SelectedDevices, HEX), canExecute: _ => HEX?.Length > 0);
 
     public void OnPropertyChanged(string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    private void Decode(object _)
+    public List<StatusBit> InitializeStatusDevices(IDeviceModels selectedDevices, string hex)
     {
-        Hex hexValue = new(hex);
+        var manufacturer = selectedDevices.Manufacturer;
+        var statusDocument = manufacturer.GetStatusDocument(selectedDevices.Models, selectedDevices.Country);
 
-        hexValue.ReduceRange(null, 127);
-        bytes = hexValue.ConvertToBinary();
+        bytes = Decode(hex);
+        OnPropertyChanged(nameof(Bytes));
 
-        HEX = Regex.Replace(hexValue.ToString(), ".{2}", "$0 ");
-        Bytes = Regex.Replace(bytes, ".{8}", "$0 ").Trim();
-
-        var manufacturer = SelectedDevices.Manufacturer;
-        var statusDocument = manufacturer.GetStatusDocument(SelectedDevices.Models, SelectedDevices.Country);
-
-        StatusDevice = InitializeStatusDevice(statusDocument);
-    }
-
-    private ObservableCollection<StatusBit> InitializeStatusDevice(Dictionary<(int, int), string> statusDocument)
-    {
-        ObservableCollection<StatusBit> status = new ObservableCollection<StatusBit>();
-
-        string[] bytes = Bytes.Split(' ');
+        string[] bytesArray = bytes.Split(' ');
+        List<StatusBit> status = new();
 
         foreach (var keyValuePair in statusDocument)
         {
-            var statusByte = bytes[keyValuePair.Key.Item1];
+            var statusByte = bytesArray[keyValuePair.Key.Item1];
             int statusBit = Convert.ToUInt16(char.GetNumericValue(statusByte, keyValuePair.Key.Item2));
+
             status.Add(new StatusBit(statusBit, keyValuePair.Value));
         }
         return status;
     }
 
-    private ObservableCollection<IDeviceModels> InitializeDevices() => new ObservableCollection<IDeviceModels>()
+    private string Decode(string hex)
+    {
+        Hex hexValue = new(hex);
+
+        hexValue.ReduceRange(null, 127);
+
+        HEX = Regex.Replace(hexValue.ToString(), ".{2}", "$0 ");
+
+        return Regex.Replace(hexValue.ConvertToBinary(), ".{8}", "$0 ").Trim();
+    }
+
+    private List<IDeviceModels> InitializeDevices() => new List<IDeviceModels>()
         {
             new DeviceModels(Datecs.Instance, 6 , Country.BG , new string[] { "DP-05", "DP-25", "DP-35", "WP-50", "DP-150" }),
             new DeviceModels(Datecs.Instance, 6, Country.BG, new string[] { "FP-800", "FP-2000", "FP-650", "SK1-21F", "SK1-31F", "FMP-10", "FP-700" }),
@@ -95,10 +96,10 @@ internal class MainViewModel : INotifyPropertyChanged
             new DeviceModels(Datecs.Instance, 8, Country.RO),
             new DeviceModels(Daisy.Instance, 6, Country.BG),
             new DeviceModels(Eltrade.Instance, 6, Country.BG),
-            new DeviceModels(Tremol.Instance, 6, Country.BG),
-            new DeviceModels(Tremol.Instance, 2, Country.KE, new string[] { "CU", "M23" }),
-            new DeviceModels(Incotext.Instance, 6, Country.KE),
-            new DeviceModels(Port.Instance, 6, Country.RU, new string[] { "150", "600", "1000" }),
-            new DeviceModels(Port.Instance, 8, Country.KZ, new string[] { "150" }),
+            new DeviceModels(Tremol.Instance, 7, Country.BG),
+            new DeviceModels(Tremol.Instance, 6, Country.KE, new string[] { "CU", "M23" }),
+            new DeviceModels(Incotext.Instance, 4, Country.KE),
+            new DeviceModels(Port.Instance, 8, Country.RU, new string[] { "150", "600", "1000" }),
+            new DeviceModels(Port.Instance, 6, Country.KZ, new string[] { "150" }),
         };
 }

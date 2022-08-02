@@ -3,7 +3,7 @@
 /// <summary>
 /// Basic information about the group of fiscal machines.
 /// </summary>
-internal class DeviceModels : IDeviceModels
+public class DeviceModels : IDeviceModels
 {
     public DeviceModels(BaseManufacturer manufacturer, int quantityByte, Country country, string[]? models = null)
     {

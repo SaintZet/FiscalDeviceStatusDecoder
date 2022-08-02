@@ -9,7 +9,7 @@
         WindowStartupLocation="CenterScreen"
         ResizeMode="CanMinimize"
         Title="FiscalDeviceStatusDecoder"
-        Height="800"
+        Height="750"
         Width="700">
     <Window.Resources>
         <conv:BoolToBrushConverter x:Key="BoolToBrushConverter" />
@@ -19,10 +19,8 @@
     </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.12*" />
-            <RowDefinition Height="0.12*" />
-            <RowDefinition Height="0.12*" />
-            <RowDefinition Height="0.12*" />
+            <RowDefinition Height="0.1*" />
+            <RowDefinition Height="0.1*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
@@ -33,8 +31,7 @@
             <Label Grid.Column="0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Content="Device"
-                   FontFamily="MV Boli" />
+                   Content="Device" />
             <ComboBox Grid.Column="1"
                       ItemsSource="{Binding Devices}"
                       SelectedItem="{Binding SelectedDevices, Mode=TwoWay }"
@@ -46,7 +43,8 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.2*" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="0.7*" />
+                <ColumnDefinition Width="0.3*" />
             </Grid.ColumnDefinitions>
             <Label Grid.Column="0"
                    HorizontalAlignment="Center"
@@ -56,47 +54,20 @@
                      HorizontalContentAlignment="Left"
                      VerticalContentAlignment="Center"
                      Padding="10"
-                     Margin="0,10,30,10"
-                     Text="{Binding HEX,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" />
-        </Grid>
-        <Grid Grid.Row="2">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="Execute" />
-            <Button Grid.Column="1"
+                     Margin="0,10,10,10"
+                     Text="{Binding HEX , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}" />
+            <Button Grid.Column="2"
                     Margin="0,10,30,10"
                     Command="{Binding DecodeCommand}"
                     Content="Decode" />
         </Grid>
 
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.2*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Column="0"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center"
-                   Content="Status Bytes" />
-            <TextBox Grid.Column="1"
-                     Text="{Binding Bytes}"
-                     IsReadOnly="True"
-                     HorizontalContentAlignment="Left"
-                     VerticalContentAlignment="Center"
-                     Padding="10"
-                     Margin="0,10,30,10" />
-        </Grid>
-        <GroupBox Grid.Row="4"
+        <GroupBox Grid.Row="2"
                   FontSize="14"
-                  Header="Status"
+                  Header="{Binding Bytes}"
                   Margin="10"
                   Padding="10">
-            <ListView ItemsSource="{Binding StatusDevice}"
+            <ListView ItemsSource="{Binding StatusDevices , Mode=TwoWay}"
                       TextElement.FontSize="12">
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
