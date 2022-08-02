@@ -1,11 +1,5 @@
 ﻿using FiscalDeviceStatusDecoder.Application;
 using FiscalDeviceStatusDecoder.Domain;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Text.RegularExpressions;
-using System.Windows.Input;
 
 namespace FiscalDeviceStatusDecoder.Presentation;
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace FiscalDeviceStatusDecoder.Domain;
+﻿namespace FiscalDeviceStatusDecoder.Domain;
 
 /// <inheritdoc/>
 internal sealed class Eltrade : BaseManufacturer

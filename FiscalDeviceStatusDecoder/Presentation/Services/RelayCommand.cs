@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Input;
-
-namespace FiscalDeviceStatusDecoder.Presentation;
+﻿namespace FiscalDeviceStatusDecoder.Presentation;
 
 internal class RelayCommand : ICommand
 {
