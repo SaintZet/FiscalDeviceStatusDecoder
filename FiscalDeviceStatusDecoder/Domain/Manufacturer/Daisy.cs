@@ -12,10 +12,54 @@ public sealed class Daisy : BaseManufacturer
     public static Daisy Instance => lazy.Value;
 
     public override string Name => nameof(Daisy);
-    public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => throw new NotImplementedException();
+    public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => new()
+    {
+        {(Array.Empty<string>(), Country.KZ), Document1! },
+    };
 
     #region Documents
 
+    public Dictionary<(int, int), string> Document1 = new()
+            {
+                { (0, 2), "OR of all errors with *from bytes 0, 1, 2 – general error" },
+                { (0, 3), "* Printing mechanism error" },
+                { (0, 4), "No external display" },
+                { (0, 5), "Date and time are not set" },
+                { (0, 6), "* Invalid command" },
+                { (0, 7), "* Syntax error" },
+
+                { (1, 1), "Wrong password" },
+                { (1, 2), "Error in cutter" },
+                { (1, 5), "Reset memory" },
+                { (1, 6), "* Prohibited command in current mode" },
+                { (1, 7), "Overflow of sum fields" },
+
+                { (2, 1), "Print of document is allowed" },
+                { (2, 2), "Non-fiscal receipt is opened" },
+                { (2, 3), "Insufficient free space in EJT" },
+                { (2, 4), "Fiscal receipt is opened" },
+                { (2, 5), "No EJT free space" },
+                { (2, 6), "Not enough paper" },
+                { (2, 7), "* No paper" },
+
+                { (3, 1), "Error number 1" },
+                { (3, 2), "Error number 2" },
+                { (3, 3), "Error number 3" },
+                { (3, 4), "Error number 4" },
+                { (3, 5), "Error number 5" },
+                { (3, 6), "Error number 6" },
+                { (3, 7), "Error number 7" },
+
+                { (4, 2), "OR of all errors with*from bytes 4 and 5– general error" },
+                { (4, 3), "* Fiscal memory full" },
+                { (4, 5), "Invalid record in fiscal memory" },
+                { (4, 7), "* Error writing data to fiscal memory" },
+
+                { (5, 2), "MRC is programmed" },
+                { (5, 3), "Tax rates are programmed" },
+                { (5, 4), "Fiscal device is activated" },
+                { (5, 7), "* FM in read-only mode" },
+    };
     public override Dictionary<(int, int), string>? DefaultDocument => new()
             {
                 { (0, 2), "OR на всички грешки с * от байтове 0, 1, 2 – обща грешка" },

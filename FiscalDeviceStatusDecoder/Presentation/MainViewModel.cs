@@ -95,6 +95,7 @@ public class MainViewModel : INotifyPropertyChanged
             new DeviceModels(Datecs.Instance, 8, Country.BG, new string[] { "DP-25X", "DP-05C", "WP-500X", "WP-50X", "FP-700X", "FP-700XR", "FMP-350Xv", "FMP-55X" }),
             new DeviceModels(Datecs.Instance, 8, Country.RO),
             new DeviceModels(Daisy.Instance, 6, Country.BG),
+            new DeviceModels(Daisy.Instance, 6, Country.KZ),
             new DeviceModels(Eltrade.Instance, 6, Country.BG),
             new DeviceModels(Tremol.Instance, 7, Country.BG),
             new DeviceModels(Tremol.Instance, 6, Country.KE, new string[] { "CU", "M23" }),

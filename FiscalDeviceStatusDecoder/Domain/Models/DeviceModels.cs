@@ -8,7 +8,7 @@ public class DeviceModels : IDeviceModels
     public DeviceModels(BaseManufacturer manufacturer, int quantityByte, Country country, string[]? models = null)
     {
         Manufacturer = manufacturer;
-        Models = models ?? System.Array.Empty<string>();
+        Models = models ?? Array.Empty<string>();
         QuantityStatusByte = quantityByte;
         Country = country;
 
