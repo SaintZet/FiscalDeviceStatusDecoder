@@ -1,7 +1,7 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain;
 
 /// <inheritdoc/>
-internal sealed class Port : BaseManufacturer
+public sealed class Port : BaseManufacturer
 {
     private static readonly Lazy<Port> lazy = new Lazy<Port>(() => new Port());
 

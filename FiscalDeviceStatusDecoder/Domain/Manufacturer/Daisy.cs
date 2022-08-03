@@ -1,7 +1,7 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain;
 
 /// <inheritdoc/>
-internal sealed class Daisy : BaseManufacturer
+public sealed class Daisy : BaseManufacturer
 {
     private static readonly Lazy<Daisy> lazy = new Lazy<Daisy>(() => new Daisy());
 

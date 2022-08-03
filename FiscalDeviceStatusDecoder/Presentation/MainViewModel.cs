@@ -5,20 +5,24 @@ namespace FiscalDeviceStatusDecoder.Presentation;
 
 public class MainViewModel : INotifyPropertyChanged
 {
+    private readonly IMessageBox MessageBox;
     private string bytes = string.Empty;
     private string hex = string.Empty;
+    private List<StatusBit>? statusDevices;
 
-    private List<StatusBit> statusDevices = new();
-
-    public MainViewModel()
+    public MainViewModel(IMessageBox messageBox)
     {
         Devices = InitializeDevices();
         SelectedDevices = Devices[0];
+        MessageBox = messageBox;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
 
-    public List<StatusBit> StatusDevices
+    public static List<IDeviceModels> Devices { get; private set; } = new List<IDeviceModels>();
+    public IDeviceModels SelectedDevices { get; set; }
+
+    public List<StatusBit>? StatusDevices
     {
         get => statusDevices;
         set
@@ -27,18 +31,17 @@ public class MainViewModel : INotifyPropertyChanged
             OnPropertyChanged(nameof(StatusDevices));
         }
     }
-    public List<IDeviceModels> Devices { get; set; }
 
-    public IDeviceModels SelectedDevices { get; set; }
     public string HEX
     {
-        get => hex;
+        get => hex.ToUpper();
         set
         {
             hex = value;
             OnPropertyChanged(nameof(HEX));
         }
     }
+
     public string Bytes
     {
         get => $"Status Bytes {bytes}";
@@ -49,46 +52,43 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
-    public ICommand DecodeCommand => new RelayCommand(execute: _ => StatusDevices = InitializeStatusDevices(SelectedDevices, HEX), canExecute: _ => HEX?.Length > 0);
+    public ICommand DecodeCommand => new RelayCommand(execute: _ => StatusDevices = InitializeStatusDevice(SelectedDevices, hex), canExecute: _ => hex?.Length > 0);
 
     public void OnPropertyChanged(string prop = "")
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(prop));
     }
 
-    public List<StatusBit> InitializeStatusDevices(IDeviceModels selectedDevices, string hex)
+    public List<StatusBit>? InitializeStatusDevice(IDeviceModels selectedDevices, string hex)
     {
-        var manufacturer = selectedDevices.Manufacturer;
-        var statusDocument = manufacturer.GetStatusDocument(selectedDevices.Models, selectedDevices.Country);
-
-        bytes = Decode(hex);
-        OnPropertyChanged(nameof(Bytes));
-
-        string[] bytesArray = bytes.Split(' ');
-        List<StatusBit> status = new();
-
-        foreach (var keyValuePair in statusDocument)
+        try
         {
-            var statusByte = bytesArray[keyValuePair.Key.Item1];
-            int statusBit = Convert.ToUInt16(char.GetNumericValue(statusByte, keyValuePair.Key.Item2));
-
-            status.Add(new StatusBit(statusBit, keyValuePair.Value));
+            List<string> bytesArray = SetStatusBytesAndHex(selectedDevices, hex);
+            return SetStatusDevice(selectedDevices, bytesArray);
         }
-        return status;
+        catch (Exception ex)
+        {
+            MessageBox.ShowMessage(ex.Message, "Oops..", MessageBoxButton.OK, MessageBoxImage.Error);
+
+            HEX = string.Empty;
+            Bytes = string.Empty;
+
+            return null;
+        }
     }
 
-    private string Decode(string hex)
+    public string DecodeToByte(ref string hex)
     {
         Hex hexValue = new(hex);
 
         hexValue.ReduceRange(null, 127);
 
-        HEX = Regex.Replace(hexValue.ToString(), ".{2}", "$0 ");
+        hex = Regex.Replace(hexValue.ToString(), ".{2}", "$0 ").Trim();
 
         return Regex.Replace(hexValue.ConvertToBinary(), ".{8}", "$0 ").Trim();
     }
 
-    private List<IDeviceModels> InitializeDevices() => new List<IDeviceModels>()
+    private static List<IDeviceModels> InitializeDevices() => new List<IDeviceModels>()
         {
             new DeviceModels(Datecs.Instance, 6 , Country.BG , new string[] { "DP-05", "DP-25", "DP-35", "WP-50", "DP-150" }),
             new DeviceModels(Datecs.Instance, 6, Country.BG, new string[] { "FP-800", "FP-2000", "FP-650", "SK1-21F", "SK1-31F", "FMP-10", "FP-700" }),
@@ -102,4 +102,43 @@ public class MainViewModel : INotifyPropertyChanged
             new DeviceModels(Port.Instance, 8, Country.RU, new string[] { "150", "600", "1000" }),
             new DeviceModels(Port.Instance, 6, Country.KZ, new string[] { "150" }),
         };
+
+    private List<StatusBit> SetStatusDevice(IDeviceModels selectedDevices, List<string> bytesArray)
+    {
+        List<StatusBit> status = new();
+        var manufacturer = selectedDevices.Manufacturer;
+        var statusDocument = manufacturer.GetStatusDocument(selectedDevices.Models, selectedDevices.Country);
+
+        foreach (var keyValuePair in statusDocument)
+        {
+            var statusByte = bytesArray[keyValuePair.Key.Item1];
+            int statusBit = Convert.ToUInt16(char.GetNumericValue(statusByte, keyValuePair.Key.Item2));
+
+            status.Add(new StatusBit(statusBit, keyValuePair.Value));
+        }
+        return status;
+    }
+
+    private List<string> SetStatusBytesAndHex(IDeviceModels selectedDevices, string hex)
+    {
+        string bytes = DecodeToByte(ref hex);
+
+        List<string> hexArray = hex.Split(' ').ToList();
+        List<string> bytesArray = bytes.Split(' ').ToList();
+
+        if (bytesArray.Count < selectedDevices.QuantityStatusByte)
+        {
+            throw new ArgumentException($"For this group device quantity of byte must be minimum {selectedDevices.QuantityStatusByte}!");
+        }
+        else if (bytesArray.Count > selectedDevices.QuantityStatusByte)
+        {
+            bytesArray.RemoveFrom(selectedDevices.QuantityStatusByte);
+            Bytes = string.Join(" ", bytesArray);
+
+            hexArray.RemoveFrom(selectedDevices.QuantityStatusByte);
+            HEX = string.Join(" ", hexArray);
+        }
+
+        return bytesArray;
+    }
 }

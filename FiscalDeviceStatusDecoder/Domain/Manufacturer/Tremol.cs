@@ -1,7 +1,7 @@
 ﻿namespace FiscalDeviceStatusDecoder.Domain;
 
 /// <inheritdoc/>
-internal sealed class Tremol : BaseManufacturer
+public sealed class Tremol : BaseManufacturer
 {
     private static readonly Lazy<Tremol> lazy = new Lazy<Tremol>(() => new Tremol());
 
