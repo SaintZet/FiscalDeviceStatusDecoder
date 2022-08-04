@@ -1,7 +1,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://example.com)
+<img src="Screenshot.png" width="400" />
 
 This application will help you decode the response from the fiscal device.
 
@@ -23,7 +23,7 @@ Something you might want to change before using the product.
 
 
 Create new Manufacturer in Domain/Manufacturer.
-  ```
+  ```csharp
   public sealed class *YourManufacturer* : BaseManufacturer
   {
       ...
@@ -33,7 +33,7 @@ Create new Manufacturer in Domain/Manufacturer.
 ### Add documentation
 
 Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufacturer*.cs
-  ```
+  ```csharp
     public override Dictionary<(string[], Country), Dictionary<(int, int), string>>? AllModels => new()
     {
         {(new string[] { "DP-05", "DP-25", "DP-35", "WP-50", "DP-150" }, Country.BG), Document1! },
@@ -47,7 +47,7 @@ Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufac
 ### Add target devices to application process
 
 Add new line in method **InitializeDevices**. Find at Application/MainViewModel.cs
-  ```
+  ```csharp
     private static List<IDeviceModels> InitializeDevices() => new List<IDeviceModels>()
         {
             new DeviceModels(Datecs.Instance, 6 , Country.BG , new string[] { "DP-05", "DP-25", "DP-35", "WP-50", "DP-150" }),
