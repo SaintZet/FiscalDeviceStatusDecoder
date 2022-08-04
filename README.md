@@ -26,7 +26,7 @@ Create new Manufacturer in Domain/Manufacturer.
   ```
   public sealed class *YourManufacturer* : BaseManufacturer
   {
-  ...
+      ...
   }
   ```
 
@@ -41,8 +41,8 @@ Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufac
         ...
     };
   ```
-  Example for document you can find in *BaseManufacturer.cs*
-  
+  P.S. Example for document you can find in *BaseManufacturer.cs* <br /> 
+  P.P.S. Usually in documantation from manufacturer FD first Bit from left have name 0.7, but im my program we call it 0.0
   
 ### Add target devices to application process
 
@@ -55,4 +55,3 @@ Add new line in method **InitializeDevices**. Find at Application/MainViewModel.
             ...
         };
   ```
- 
