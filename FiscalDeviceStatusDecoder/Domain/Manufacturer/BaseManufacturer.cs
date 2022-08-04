@@ -30,7 +30,7 @@ public abstract class BaseManufacturer
             }
         }
 
-        throw new NotImplementedException();
+        throw new ArgumentException($"Check that the documentation for this device group is correct.");
     }
 }
 

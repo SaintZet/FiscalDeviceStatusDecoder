@@ -51,7 +51,7 @@
                      VerticalContentAlignment="Center"
                      Padding="10"
                      Margin="0,10,10,10"
-                     Text="{Binding HEX , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
+                     Text="{Binding DisplayHex , Mode=TwoWay,UpdateSourceTrigger=PropertyChanged, NotifyOnSourceUpdated=True}">
             </TextBox>
             <Button Grid.Column="2"
                     Margin="0,10,30,10"
@@ -61,7 +61,7 @@
 
         <GroupBox Grid.Row="2"
                   FontSize="14"
-                  Header="{Binding Bytes}"
+                  Header="{Binding DisplayBytes}"
                   Margin="10"
                   Padding="10">
             <ListView ItemsSource="{Binding StatusDevices , Mode=TwoWay}"
