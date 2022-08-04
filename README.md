@@ -55,3 +55,10 @@ Add new line in method **InitializeDevices**. Find at Application/MainViewModel.
             ...
         };
   ```
+  
+## Portable version
+
+If u wanna create portable version(only  .exe file) use this CMD line for build in project directory.
+  ```
+dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false
+  ```
