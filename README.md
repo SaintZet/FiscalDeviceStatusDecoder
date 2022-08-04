@@ -1,6 +1,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-
+<a name="readme-top"></a>
 <img src="Screenshot.png" width="400" />
 
 This application will help you decode the response from the fiscal device.
@@ -10,9 +10,9 @@ How:
 Removes all invalid characters. Removes numbers less than **127**.<br />
 For example: *04H 80H 80H C0H 80H 80H B8H 05H* > *80 80 C0 80 80 B8*.
 * Converts to bytes *80 80 C0 80 80 B8 FF FF* > *10000000 10000000 11000000 10000000 10000000 10111000*.
-* Parse on existing <a href="#readme-top">documentation</a>.
+* Parse on existing <a href="#add-documentation">documentation</a>.
 
-Of course, you will have to make changes to the program if you are interested in other groups of <a href="#readme-top">fiscal devices</a> or other <a href="#readme-top">manufacturers</a>.
+Of course, you will have to make changes to the program if you are interested in other groups of <a href="#add-target-devices-to-application-process">fiscal devices</a> or other <a href="#add-manufacturer">manufacturers</a>.
 
 <!-- GETTING STARTED -->
 ## Getting Started
