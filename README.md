@@ -42,7 +42,7 @@ Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufac
     };
   ```
   P.S. Example for document you can find in *BaseManufacturer.cs* <br /> 
-  P.P.S. Usually in documantation from manufacturer FD first Bit from left have name 0.7, but im my program we call it 0.0
+  P.P.S. Usually in documantation from manufacturer FD first Bit from left have name 0.7, but we are call it 0.0
   
 ### Add target devices to application process
 
