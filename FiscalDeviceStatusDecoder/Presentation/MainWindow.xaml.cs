@@ -1,4 +1,4 @@
-﻿using FiscalDeviceStatusDecoder.Presentation;
+﻿using FiscalDeviceStatusDecoder.Application;
 
 namespace FiscalDeviceStatusDecoder
 {
