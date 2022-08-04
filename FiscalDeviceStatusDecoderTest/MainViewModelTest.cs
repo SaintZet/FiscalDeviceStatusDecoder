@@ -1,5 +1,5 @@
+using FiscalDeviceStatusDecoder.Application;
 using FiscalDeviceStatusDecoder.Domain;
-using FiscalDeviceStatusDecoder.Presentation;
 using NUnit.Framework;
 using System.Windows;
 

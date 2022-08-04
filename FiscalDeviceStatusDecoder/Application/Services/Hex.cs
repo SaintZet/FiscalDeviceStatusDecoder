@@ -1,4 +1,4 @@
-﻿namespace FiscalDeviceStatusDecoder.Application;
+﻿namespace FiscalDeviceStatusDecoder.Application.Services;
 
 public class Hex
 {

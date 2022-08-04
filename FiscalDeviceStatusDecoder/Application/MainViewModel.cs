@@ -1,7 +1,8 @@
-﻿using FiscalDeviceStatusDecoder.Application;
+﻿using FiscalDeviceStatusDecoder.Application.Services;
 using FiscalDeviceStatusDecoder.Domain;
+using FiscalDeviceStatusDecoder.Presentation;
 
-namespace FiscalDeviceStatusDecoder.Presentation;
+namespace FiscalDeviceStatusDecoder.Application;
 
 public class MainViewModel : INotifyPropertyChanged
 {
