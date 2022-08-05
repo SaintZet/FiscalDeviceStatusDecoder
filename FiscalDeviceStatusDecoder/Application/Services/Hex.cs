@@ -22,7 +22,7 @@ public class Hex
 
     public void ReduceRange(int? lessThan = null, int? moreThan = null)
     {
-        bool _ = Value.Length % 2 != 0 ? true : throw new ArgumentException($"You must write HEX number!");
+        bool _ = Value.Length % 2 == 0 ? true : throw new ArgumentException($"You must write HEX number!");
 
         List<string> validHexNumbers = new List<string>();
 
