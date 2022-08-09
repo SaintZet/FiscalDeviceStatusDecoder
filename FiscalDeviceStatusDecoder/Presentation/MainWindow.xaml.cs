@@ -10,7 +10,6 @@ namespace FiscalDeviceStatusDecoder
         public MainWindow()
         {
             InitializeComponent();
-            DataContext = new MainViewModel(new Presentation.Services.MessageBox());
         }
     }
 }

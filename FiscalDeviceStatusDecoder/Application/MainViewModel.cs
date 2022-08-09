@@ -6,16 +6,17 @@ namespace FiscalDeviceStatusDecoder.Application;
 
 public class MainViewModel : INotifyPropertyChanged
 {
-    private readonly IMessageBox MessageBox;
+    public const string ValidHexMessage = "Valid HEX";
+
     private string bytes = string.Empty;
     private string hex = string.Empty;
+    private string displayStatusInput = string.Empty;
     private List<StatusBit>? statusDevices;
 
-    public MainViewModel(IMessageBox messageBox)
+    public MainViewModel()
     {
         Devices = InitializeDevices();
         SelectedDevices = Devices[0];
-        MessageBox = messageBox;
     }
 
     public event PropertyChangedEventHandler? PropertyChanged;
@@ -66,6 +67,16 @@ public class MainViewModel : INotifyPropertyChanged
         }
     }
 
+    public string DisplayStatusInput
+    {
+        get => displayStatusInput;
+        set
+        {
+            displayStatusInput = value;
+            OnPropertyChanged(nameof(DisplayStatusInput));
+        }
+    }
+
     public ICommand DecodeCommand => new RelayCommand(execute: _ => StatusDevices = InitializeStatusDevice(SelectedDevices, hex), canExecute: _ => hex?.Length > 0);
 
     public string DecodeToByte(ref string hex)
@@ -89,14 +100,15 @@ public class MainViewModel : INotifyPropertyChanged
         try
         {
             List<string> bytesArray = SetStatusBytesAndHex(selectedDevices, hex);
-            return SetStatusDevice(selectedDevices, bytesArray);
+            var statusBits = SetStatusDevice(selectedDevices, bytesArray);
+
+            DisplayStatusInput = ValidHexMessage;
+
+            return statusBits;
         }
         catch (Exception ex)
         {
-            MessageBox.ShowMessage(ex.Message, "Oops..", MessageBoxButton.OK, MessageBoxImage.Error);
-
-            Hex = string.Empty;
-            Bytes = string.Empty;
+            DisplayStatusInput = ex.Message;
 
             return null;
         }

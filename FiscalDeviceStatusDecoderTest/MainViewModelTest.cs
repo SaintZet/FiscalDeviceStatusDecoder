@@ -2,30 +2,17 @@ using FiscalDeviceStatusDecoder.Application;
 using FiscalDeviceStatusDecoder.Domain;
 using NSubstitute;
 using NUnit.Framework;
-using System.Windows;
 
 namespace FiscalDeviceStatusDecoderTest;
-
-internal class MessageBox : IMessageBox
-{
-    internal int CountMessage;
-
-    public void ShowMessage(string messageBoxText, string caption, MessageBoxButton button, MessageBoxImage icon)
-    {
-        CountMessage++;
-    }
-}
 
 public class MainViewModelTest
 {
     private MainViewModel target;
-    private MessageBox messageBox;
 
     [SetUp]
     public void Setup()
     {
-        messageBox = new();
-        target = new(messageBox);
+        target = new();
     }
 
     [Test]
@@ -99,6 +86,7 @@ public class MainViewModelTest
     {
         // arrange
         int countErrorForInvalidHex = 0;
+        int countMessage = 0;
 
         // act
         foreach (var devices in MainViewModel.Devices)
@@ -107,9 +95,14 @@ public class MainViewModelTest
             countErrorForInvalidHex += bytesArray.Length < devices.QuantityStatusByte ? 1 : 0;
 
             target.InitializeStatusDevice(devices, hex);
+
+            if (target.DisplayStatusInput != MainViewModel.ValidHexMessage)
+            {
+                countMessage++;
+            }
         }
         // assert
-        Assert.That(messageBox.CountMessage, Is.EqualTo(countErrorForInvalidHex));
+        Assert.That(countMessage, Is.EqualTo(countErrorForInvalidHex));
     }
 
     [Test]
@@ -120,6 +113,7 @@ public class MainViewModelTest
     {
         // arrange
         int countErrorForInvalidHex = 0;
+        int countMessage = 0;
 
         // act
         foreach (var devices in MainViewModel.Devices)
@@ -128,10 +122,15 @@ public class MainViewModelTest
             countErrorForInvalidHex++;
 
             target.InitializeStatusDevice(mock, hex);
+
+            if (target.DisplayStatusInput != MainViewModel.ValidHexMessage)
+            {
+                countMessage++;
+            }
         }
 
         // assert
-        Assert.That(messageBox.CountMessage, Is.EqualTo(countErrorForInvalidHex));
+        Assert.That(countMessage, Is.EqualTo(countErrorForInvalidHex));
     }
 
     [Test]
