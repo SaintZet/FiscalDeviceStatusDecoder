@@ -17,9 +17,13 @@ Of course, you will have to make changes to the program if you are interested in
 <!-- GETTING STARTED -->
 ## Getting Started
 
-Something you might want to change before using the product.
+### Dependencies
 
-### Add manufacturer
+.NET 6.0 Runtime
+
+### Installing
+
+#### Add manufacturer
 
 
 Create new Manufacturer in Domain/Manufacturer.
@@ -30,7 +34,7 @@ Create new Manufacturer in Domain/Manufacturer.
   }
   ```
 
-### Add documentation
+#### Add documentation
 
 Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufacturer*.cs
   ```csharp
@@ -44,7 +48,7 @@ Add new line in property **AllModels**. Find at Domain/Manufacturer/*YourManufac
   P.S. Example for document you can find in *BaseManufacturer.cs* <br /> 
   P.P.S. Usually in documantation from manufacturer FD first Bit from left have name 0.7, but we are call it 0.0
   
-### Add target devices to application process
+#### Add target devices to application process
 
 Add new line in method **InitializeDevices**. Find at Application/MainViewModel.cs
   ```csharp
@@ -56,9 +60,27 @@ Add new line in method **InitializeDevices**. Find at Application/MainViewModel.
         };
   ```
   
-## Portable version
+### Portable version
 
 If u wanna create portable version(only  .exe file) use this CMD line for build in project directory.
   ```
 dotnet publish -p:PublishSingleFile=true -r win-x64 -c Release --self-contained false
   ```
+  
+## Authors
+
+Chepets Serhii <br /> 
+Contacts: [LinkedIn](https://www.linkedin.com/in/serhii-chepets-412b46223/) / [GitHub](https://github.com/SaintZet) / [Telegram](https://t.me/SaintZet)
+
+## Version History
+
+* v1.0.0
+    * Removes all invalid characters in input field .
+    * Removes HEX numbers less than 127(DEC).
+    * Converts HEX to bytes.
+    * Parse on existing documentation.
+    * Error messages when trying to decode invalid values for specific fiscal machine.
+
+## License
+
+This project is unlicensed.
